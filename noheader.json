@@ -1,0 +1,2194 @@
+{
+	"variables": {
+		"version": "3.67",
+		"primary_policy": [
+			"remove_loading_pagefinish"
+		],
+		"secondary_policy": [
+			"remove_loading_pagestart"
+		],
+		"withheader_jasonUrl": "https://bdknative.s3-us-west-1.amazonaws.com/avzme/v1.92/withheader.json",
+		"noheader_jasonUrl": "https://bdknative.s3-us-west-1.amazonaws.com/avzme/v1.92/noheader.json",
+		"public_version": "3",
+		"bdkRelease": "1.9",
+		"notchcolor": "#FFFFFF",
+		"jasonUrl": "https://bdknative.s3-us-west-1.amazonaws.com/avzme/v1.92/noheader.json",
+		"siteUrl": "https://kidly.app",
+		"baseUrl": "kidly.app",
+		"header_type": "none",
+		"header_title": "Kidly App",
+		"header_background": "#AD7DE6",
+		"header_menu_type": "image",
+		"header_menu_text": "menu",
+		"header_menu_image": "file://menu_white.png",
+		"header_menu_font": "HelveticaNeue",
+		"header_menu_badge_type": "none",
+		"header_menu_badge_text": "1",
+		"header_menu_badge_background": "#FF6600",
+		"header_menu_badge_color": "#FFFFFF",
+		"header_menu_badge_top": "0",
+		"header_menu_badge_left": "16",
+		"header_shy": "false",
+		"header_color": "#FFFFFF",
+		"header_size": "16",
+		"header_font": "HelveticaNeue-Bold",
+		"header_imageurl": "file://logo.png",
+		"header_imagewidth": "32",
+		"header_imageheight": "32",
+		"statusbarcolor": "#FFFFFF",
+		"view_type": "primary",
+		"preload_background": "#FFFFFF",
+		"showNotch": "true",
+		"showPreload": "false",
+		"disable_back_button": "true",
+		"template_Scan": "https://bdknative.s3-us-west-1.amazonaws.com/nativetemplates/template_codescan.json",
+		"template_Menu": "https://bdknative.s3-us-west-1.amazonaws.com/nativetemplates/template_listtypemenu.json",
+		"splash_layer_url": "file://transitionloader.gif",
+		"splash_layer_width": "160",
+		"splash_layer_left": "50%-80",
+		"splash_layer_top": "50%-80",
+		"splash_section_background": "#FFFFFF",
+		"opening_layer_url": "file://customloader.gif",
+		"opening_layer_width": "160",
+		"opening_layer_left": "50%-80",
+		"opening_layer_top": "50%-80",
+		"opening_section_background": "#FFFFFF",
+		"transition_layer_url": "file://defaultloader.gif",
+		"transition_layer_width": "120",
+		"transition_layer_left": "50%-60",
+		"transition_layer_top": "50%-60",
+		"transition_section_background": "#ffffff",
+		"httpauthusername": "nameduser",
+		"httpauthpassword": "wordedpass",
+		"ios_user_agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.0 Mobile/15E148 Safari/604.1",
+		"config_ios_apptracking": "manual",
+		"android_scroll_bounce": "disabled",
+		"android_scrollbar_visible": "disabled",
+		"android_scrolling_enabled": "enabled"
+	},
+	"render_logic": {
+		"splash": {
+			"layers": [
+				{
+					"type": "image",
+					"url": "{{($get.view_type !== 'primary') ? $get.splash_layer_url : $get.opening_layer_url}}",
+					"style": {
+						"width": "{{($get.view_type !== 'primary') ? $get.splash_layer_width : $get.opening_layer_width}}",
+						"left": "{{($get.view_type !== 'primary') ? $get.splash_layer_left : $get.opening_layer_left}}",
+						"top": "{{($get.view_type !== 'primary') ? $get.splash_layer_top : $get.opening_layer_top}}"
+					}
+				}
+			],
+			"sections": [
+				{
+					"items": [
+						{
+							"type": "space",
+							"style": {
+								"background": "{{($get.view_type !== 'primary') ? $get.splash_section_background : $get.opening_section_background}}",
+								"height": "100%"
+							}
+						}
+					]
+				}
+			]
+		},
+		"transition": {
+			"layers": [
+				{
+					"type": "image",
+					"url": "{{$get.transition_layer_url}}",
+					"style": {
+						"width": "{{$get.transition_layer_width}}",
+						"left": "{{$get.transition_layer_left}}",
+						"top": "{{$get.transition_layer_top}}"
+					}
+				}
+			],
+			"sections": [
+				{
+					"items": [
+						{
+							"type": "space",
+							"style": {
+								"background": "{{$get.transition_section_background}}",
+								"height": "100%"
+							}
+						}
+					]
+				}
+			]
+		},
+		"background": {
+			"type": "html",
+			"url": "{{$get.url}}",
+			"action": {
+				"trigger": "linkClick"
+			},
+			"style": {
+				"progress": "rgba(0,0,0,0)",
+				"background": [
+					{
+						"{{#if ($get.url).includes($get.baseUrl)}}": "{{$get.notchcolor}}"
+					},
+					{
+						"{{#else}}": "#ffffff"
+					}
+				]
+			}
+		},
+		"components_header": {
+			"title": {
+				"label": {
+					"type": "label",
+					"text": "{{$get.header_title}}",
+					"style": {
+						"align": "center",
+						"size": "{{$get.header_size}}",
+						"font": "{{$get.header_font}}",
+						"color": "{{$get.header_color}}"
+					}
+				},
+				"image": {
+					"type": "image",
+					"style": {
+						"width": "{{$get.header_imagewidth}}",
+						"height": "{{$get.header_imageheight}}"
+					},
+					"url": "{{$get.header_imageurl}}"
+				}
+			},
+			"style": {
+				"label": {
+					"background": "{{$get.header_background}}",
+					"color": "{{$get.header_color}}",
+					"size": "{{$get.header_size}}",
+					"font": "{{$get.header_font}}"
+				},
+				"image": {
+					"background": "{{$get.header_background}}",
+					"color": "{{$get.header_color}}"
+				}
+			},
+			"menu": {
+				"text": {
+					"text": "{{$get.header_menu_text}}",
+					"style": {
+						"color": "{{$get.header_color}}",
+						"font": "{{$get.header_menu_font}}",
+						"size": "{{$get.header_size}}"
+					},
+					"action": {
+						"trigger": "headerMenuClicked"
+					}
+				},
+				"image": {
+					"image": "{{$get.header_menu_image}}",
+					"action": {
+						"trigger": "headerMenuClicked"
+					}
+				}
+			},
+			"badge": {
+				"text": "{{$get.header_menu_badge_text}}",
+				"style": {
+					"background": "{{$get.header_menu_badge_background}}",
+					"color": "{{$get.header_menu_badge_color}}",
+					"top": "{{$get.header_menu_badge_top}}",
+					"left": "{{$get.header_menu_badge_left}}"
+				}
+			}
+		}
+	},
+	"$jason": {
+		"head": {
+			"title": {
+				"@": "$document.variables.header_title"
+			},
+			"actions": {
+				"$load": {
+					"type": "$set",
+					"options": {
+						"@": "$document.variables",
+						"url": [
+							{
+								"{{#if ('deeplinkUrl' in $get && $get.deeplinkUrl)}}": "{{decodeURI($get.deeplinkUrl)}}"
+							},
+							{
+								"{{#elseif ($params && 'targetUrl' in $params) || ($env && 'notificationUrl' in $env)}}": "{{($params.targetUrl)?($params.targetUrl):(decodeURI($env.notificationUrl))}}"
+							},
+							{
+								"{{#elseif ($cache && 'altSiteUrl' in $cache) && (($cache.altSiteUrl).includes('https://'))}}": "{{decodeURI($cache.altSiteUrl)}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.siteUrl"
+								}
+							}
+						],
+						"baseUrl": [
+							{
+								"{{#if $params && 'baseUrl' in $params}}": "{{$params.baseUrl}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.baseUrl"
+								}
+							}
+						],
+						"statusbarcolor": [
+							{
+								"{{#if $params && 'statusbarcolor' in $params}}": "{{$params.statusbarcolor}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.statusbarcolor"
+								}
+							}
+						],
+						"notchcolor": [
+							{
+								"{{#if $params && 'notchcolor' in $params}}": "{{$params.notchcolor}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.notchcolor"
+								}
+							}
+						],
+						"next_layers": [
+							{
+								"{{#if $params && 'splash' in $params}}": "{{$params.splash.layers}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.splash.layers"
+								}
+							}
+						],
+						"next_sections": [
+							{
+								"{{#if $params && 'splash' in $params}}": "{{$params.splash.sections}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.splash.sections"
+								}
+							}
+						],
+						"device_os_name": "{{$env.device.os.name}}",
+						"header_type": [
+							{
+								"{{#if $params && 'header_type' in $params}}": "{{$params.header_type}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_type"
+								}
+							}
+						],
+						"header_title": [
+							{
+								"{{#if $params && 'header_title' in $params}}": "{{$params.header_title}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_title"
+								}
+							}
+						],
+						"header_background": [
+							{
+								"{{#if $params && 'header_background' in $params}}": "{{$params.header_background}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_background"
+								}
+							}
+						],
+						"header_color": [
+							{
+								"{{#if $params && 'header_color' in $params}}": "{{$params.header_color}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_color"
+								}
+							}
+						],
+						"header_size": [
+							{
+								"{{#if $params && 'header_type' in $params}}": "{{$params.header_size}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_size"
+								}
+							}
+						],
+						"header_font": [
+							{
+								"{{#if $params && 'header_font' in $params}}": "{{$params.header_font}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_font"
+								}
+							}
+						],
+						"header_imageurl": [
+							{
+								"{{#if $params && 'header_imageurl' in $params}}": "{{$params.header_imageurl}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_imageurl"
+								}
+							}
+						],
+						"header_imagewidth": [
+							{
+								"{{#if $params && 'header_imagewidth' in $params}}": "{{$params.header_imagewidth}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_imagewidth"
+								}
+							}
+						],
+						"header_imageheight": [
+							{
+								"{{#if $params && 'header_imageheight' in $params}}": "{{$params.header_imageheight}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_imageheight"
+								}
+							}
+						],
+						"header_menu_type": [
+							{
+								"{{#if $params && 'header_menu_type' in $params}}": "{{$params.header_menu_type}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_type"
+								}
+							}
+						],
+						"header_menu_text": [
+							{
+								"{{#if $params && 'header_menu_text' in $params}}": "{{$params.header_menu_text}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_text"
+								}
+							}
+						],
+						"header_menu_image": [
+							{
+								"{{#if $params && 'header_menu_image' in $params}}": "{{$params.header_menu_image}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_image"
+								}
+							}
+						],
+						"header_menu_font": [
+							{
+								"{{#if $params && 'header_menu_font' in $params}}": "{{$params.header_menu_font}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_font"
+								}
+							}
+						],
+						"header_menu_badge_type": [
+							{
+								"{{#if $params && 'header_menu_badge_type' in $params}}": "{{$params.header_menu_badge_type}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_badge_type"
+								}
+							}
+						],
+						"header_menu_badge_text": [
+							{
+								"{{#if $params && 'header_menu_badge_text' in $params}}": "{{$params.header_menu_badge_text}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_badge_text"
+								}
+							}
+						],
+						"header_menu_badge_background": [
+							{
+								"{{#if $params && 'header_menu_badge_background' in $params}}": "{{$params.header_menu_badge_background}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_badge_background"
+								}
+							}
+						],
+						"header_menu_badge_color": [
+							{
+								"{{#if $params && 'header_menu_badge_color' in $params}}": "{{$params.header_menu_badge_color}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_badge_color"
+								}
+							}
+						],
+						"header_menu_badge_top": [
+							{
+								"{{#if $params && 'header_menu_badge_top' in $params}}": "{{$params.header_menu_badge_top}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_badge_top"
+								}
+							}
+						],
+						"header_menu_badge_left": [
+							{
+								"{{#if $params && 'header_menu_badge_left' in $params}}": "{{$params.header_menu_badge_left}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_menu_badge_left"
+								}
+							}
+						],
+						"header_shy": [
+							{
+								"{{#if $params && 'header_shy' in $params}}": "{{$params.header_shy}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.header_shy"
+								}
+							}
+						],
+						"view_type": [
+							{
+								"{{#if $params && 'view_type' in $params}}": "{{$params.view_type}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.view_type"
+								}
+							}
+						],
+						"splash_layer_url": [
+							{
+								"{{#if $params && 'splash_layer_url' in $params}}": "{{$params.splash_layer_url}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.splash_layer_url"
+								}
+							}
+						],
+						"splash_layer_width": [
+							{
+								"{{#if $params && 'splash_layer_width' in $params}}": "{{$params.splash_layer_width}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.splash_layer_width"
+								}
+							}
+						],
+						"splash_layer_left": [
+							{
+								"{{#if $params && 'splash_layer_left' in $params}}": "{{$params.splash_layer_left}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.splash_layer_left"
+								}
+							}
+						],
+						"splash_layer_top": [
+							{
+								"{{#if $params && 'splash_layer_top' in $params}}": "{{$params.splash_layer_top}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.splash_layer_top"
+								}
+							}
+						],
+						"splash_section_background": [
+							{
+								"{{#if $params && 'splash_section_background' in $params}}": "{{$params.splash_section_background}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.splash_section_background"
+								}
+							}
+						],
+						"opening_layer_url": [
+							{
+								"{{#if $params && 'opening_layer_url' in $params}}": "{{$params.opening_layer_url}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.opening_layer_url"
+								}
+							}
+						],
+						"opening_layer_width": [
+							{
+								"{{#if $params && 'opening_layer_width' in $params}}": "{{$params.opening_layer_width}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.opening_layer_width"
+								}
+							}
+						],
+						"opening_layer_left": [
+							{
+								"{{#if $params && 'opening_layer_left' in $params}}": "{{$params.opening_layer_left}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.opening_layer_left"
+								}
+							}
+						],
+						"opening_layer_top": [
+							{
+								"{{#if $params && 'opening_layer_top' in $params}}": "{{$params.opening_layer_top}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.opening_layer_top"
+								}
+							}
+						],
+						"opening_section_background": [
+							{
+								"{{#if $params && 'opening_section_background' in $params}}": "{{$params.opening_section_background}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.opening_section_background"
+								}
+							}
+						],
+						"transition_layer_url": [
+							{
+								"{{#if $params && 'transition_layer_url' in $params}}": "{{$params.transition_layer_url}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.transition_layer_url"
+								}
+							}
+						],
+						"transition_layer_width": [
+							{
+								"{{#if $params && 'transition_layer_width' in $params}}": "{{$params.transition_layer_width}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.transition_layer_width"
+								}
+							}
+						],
+						"transition_layer_left": [
+							{
+								"{{#if $params && 'transition_layer_left' in $params}}": "{{$params.transition_layer_left}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.transition_layer_left"
+								}
+							}
+						],
+						"transition_layer_top": [
+							{
+								"{{#if $params && 'transition_layer_top' in $params}}": "{{$params.transition_layer_top}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.transition_layer_top"
+								}
+							}
+						],
+						"transition_section_background": [
+							{
+								"{{#if $params && 'transition_section_background' in $params}}": "{{$params.transition_section_background}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.transition_section_background"
+								}
+							}
+						],
+						"disable_back_button": [
+							{
+								"{{#if $params && 'disable_back_button' in $params}}": "{{$params.disable_back_button}}"
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.variables.disable_back_button"
+								}
+							}
+						]
+					},
+					"success": {
+						"type": "$script.include",
+						"options": {
+							"items": [
+								{
+									"text": "var bdk_utils={calc_header:function(e,a,r){var t,n,d,_,o;if(a&&r){for(var i in a)null!==a[i]&&void 0!==a[i]||delete a[i];e=Object.assign(e,a)}return'label'===e.header_type&&(n={type:'label',text:e.header_title,style:{align:'center',size:e.header_size,font:e.header_font,color:e.header_color}},d={background:e.header_background,color:e.header_color,size:e.header_size,font:e.header_font}),'image'===e.header_type&&(n={type:'image',url:e.header_imageurl,style:{width:e.header_imagewidth,height:e.header_imageheight}},d={background:e.header_background,color:e.header_color}),'image'!==e.header_menu_type&&'text'!==e.header_menu_type||('text'===e.header_menu_badge_type&&(o={text:e.header_menu_badge_text,style:{background:e.header_menu_badge_background,color:e.header_menu_badge_color,top:e.header_menu_badge_top,left:e.header_menu_badge_left}}),'image'===e.header_menu_type&&(_={image:e.header_menu_image,action:{trigger:'headerMenuClicked'}}),'text'===e.header_menu_type&&(_={text:e.header_menu_text,style:{color:e.header_color,font:e.header_menu_font,size:e.header_size},action:{trigger:'headerMenuClicked'}}),o&&(_.badge=o)),'label'===e.header_type||'image'===e.header_type?(t={title:n,style:d},_&&(t.menu=_)):t=null,t},echoString:function(){return'I am a string'},echoNumber:function(){return 5},echoJSON:function(){return{key1:'I am value 1',key2:'I am value 2'}},calc_body:function(e,a){var r={};return a.includes('background')&&(r.background=e.next_background),a.includes('background_passive')&&(r.background=e.current_background_passive),a.includes('header')&&e.next_header&&e.next_header.title&&(r.header=e.next_header),a.includes('layers')&&(r.layers=e.next_layers),a.includes('sections')&&(r.sections=e.sections),r}};"
+								}
+							]
+						},
+						"success": {
+							"trigger": "runFunction",
+							"options": {
+								"name": [
+									{
+										"{{#if ($get.url).includes($get.baseUrl)}}": "renderSplash"
+									},
+									{
+										"{{#else}}": "renderNow"
+									}
+								],
+								"options": {
+									"dummy": "variable for ios"
+								}
+							}
+						}
+					}
+				},
+				"renderSplash": {
+					"type": "$set",
+					"options": {
+						"next_background": {
+							"@": "$document.render_logic.background"
+						},
+						"next_layers": {
+							"@": "$document.render_logic.splash.layers"
+						},
+						"next_sections": {
+							"@": "$document.render_logic.splash.sections"
+						},
+						"next_header": "{{bdk_utils.calc_header($get,$params,true)}}",
+						"next_background_passive": [
+							{
+								"{{#if $env.device.os.name==='ios'}}": {}
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.render_logic.background"
+								}
+							}
+						]
+					},
+					"success": {
+						"type": "$render",
+						"options": {
+							"template": "splashlayer"
+						},
+						"success": {
+							"type": "$set",
+							"options": {
+								"current_header": "{{$get.next_header}}",
+								"current_background": "{{$get.next_background}}",
+								"current_background_passive": "{{$get.next_background_passive}}",
+								"current_layers": "{{$get.next_layers}}"
+							},
+							"success": {
+								"trigger": "runFunction",
+								"options": {
+									"name": [
+										{
+											"{{#if ($get.header_type).includes('none')}}": "setStatusBar"
+										},
+										{
+											"{{#else}}": "sendDeviceInfoToBubble"
+										}
+									],
+									"options": {
+										"dummy": "variable for ios"
+									}
+								}
+							}
+						},
+						"error": {
+							"type": "$util.banner",
+							"options": {
+								"title": "Ran into error",
+								"description": "on load"
+							}
+						}
+					}
+				},
+				"renderNow": {
+					"type": "$set",
+					"options": {
+						"next_background": {
+							"@": "$document.render_logic.background"
+						},
+						"next_header": "{{bdk_utils.calc_header($get,$params,true)}}",
+						"next_background_passive": [
+							{
+								"{{#if $env.device.os.name==='ios'}}": {}
+							},
+							{
+								"{{#else}}": {
+									"@": "$document.render_logic.background"
+								}
+							}
+						]
+					},
+					"success": {
+						"type": "$render",
+						"success": {
+							"type": "$set",
+							"options": {
+								"current_header": "{{$get.next_header}}",
+								"current_background": "{{$get.next_background}}",
+								"current_background_passive": "{{$get.next_background_passive}}",
+								"current_layers": "{{$get.next_layers}}"
+							},
+							"success": {
+								"trigger": "runFunction",
+								"options": {
+									"name": [
+										{
+											"{{#if ($get.header_type).includes('none')}}": "setStatusBar"
+										},
+										{
+											"{{#else}}": "sendDeviceInfoToBubble"
+										}
+									],
+									"options": {
+										"dummy": "variable for ios"
+									}
+								}
+							}
+						},
+						"error": {
+							"type": "$util.banner",
+							"options": {
+								"title": "Ran into error",
+								"description": "on load"
+							}
+						}
+					},
+					"error": {
+						"type": "$util.banner",
+						"options": {
+							"title": "Ran into error",
+							"description": "on load"
+						}
+					}
+				},
+				"renderNoBg": {
+					"type": "$render",
+					"options": {
+						"template": "body_ex_bg"
+					}
+				},
+				"removeLoading": {
+					"type": "$render",
+					"options": {
+						"template": "body_ex_bg"
+					},
+					"success": {
+						"trigger": "sendDeviceInfoToBubble"
+					}
+				},
+				"updateLoading": {
+					"type": "$set",
+					"options": {
+						"splash_layer_url": "{{($jason.splash_layer_url) ? $jason.splash_layer_url : $get.splash_layer_url}}",
+						"splash_layer_width": "{{($jason.splash_layer_width) ? $jason.splash_layer_width : $get.splash_layer_width}}",
+						"splash_layer_left": "{{($jason.splash_layer_left) ? $jason.splash_layer_left : $get.splash_layer_left}}",
+						"splash_layer_top": "{{($jason.splash_layer_top) ? $jason.splash_layer_top : $get.splash_layer_top}}",
+						"splash_section_background": "{{($jason.splash_section_background) ? $jason.splash_section_background : $get.splash_section_background}}"
+					}
+				},
+				"navigate": {
+					"type": "$href",
+					"options": {
+						"url": "{{encodeURI(($get.header_type !== 'none') ? $get.withheader_jasonUrl : $get.noheader_jasonUrl)}}",
+						"options": {
+							"targetUrl": "{{$jason.url}}",
+							"notchcolor": "{{($jason.notchcolor) ? $jason.notchcolor : $get.notchcolor}}",
+							"baseUrl": "{{($jason.baseUrl) ? $jason.baseUrl : $get.baseUrl}}",
+							"header_title": "{{($jason.header_title) ? $jason.header_title : $get.header_title}}",
+							"header_background": "{{($jason.header_background) ? $jason.header_background : $get.header_background}}",
+							"header_color": "{{($jason.header_color) ? $jason.header_color : $get.header_color}}",
+							"header_size": "{{($jason.header_size) ? $jason.header_size : $get.header_size}}",
+							"header_font": "{{($jason.header_font) ? $jason.header_font : $get.header_font}}",
+							"header_imageurl": "{{($jason.header_imageurl) ? $jason.header_imageurl : $get.header_imageurl}}",
+							"header_imagewidth": "{{($jason.header_imagewidth) ? $jason.header_imagewidth : $get.header_imagewidth}}",
+							"header_imageheight": "{{($jason.header_imageheight) ? $jason.header_imageheight : $get.header_imageheight}}",
+							"header_type": "{{($jason.header_type) ? $jason.header_type : $get.header_type}}",
+							"header_menu_type": "{{($jason.header_menu_type) ? $jason.header_menu_type : $get.header_menu_type}}",
+							"header_menu_text": "{{($jason.header_menu_text) ? $jason.header_menu_text : $get.header_menu_text}}",
+							"header_menu_image": "{{($jason.header_menu_image) ? $jason.header_menu_image : $get.header_menu_image}}",
+							"header_menu_font": "{{($jason.header_menu_font) ? $jason.header_menu_font : $get.header_menu_font}}",
+							"header_menu_badge_type": "{{($jason.header_menu_badge_type) ? $jason.header_menu_badge_type : $get.header_menu_badge_type}}",
+							"header_menu_badge_text": "{{($jason.header_menu_badge_text) ? $jason.header_menu_badge_text : $get.header_menu_badge_text}}",
+							"header_menu_badge_background": "{{($jason.header_menu_badge_background) ? $jason.header_menu_badge_background : $get.header_menu_badge_background}}",
+							"header_menu_badge_color": "{{($jason.header_menu_badge_color) ? $jason.header_menu_badge_color : $get.header_menu_badge_color}}",
+							"header_menu_badge_top": "{{($jason.header_menu_badge_top) ? $jason.header_menu_badge_top : $get.header_menu_badge_top}}",
+							"header_menu_badge_left": "{{($jason.header_menu_badge_left) ? $jason.header_menu_badge_left : $get.header_menu_badge_left}}",
+							"header_shy": "{{($jason.header_shy) ? $jason.header_shy : $get.header_shy}}",
+							"splash_layer_url": "{{($jason.splash_layer_url) ? $jason.splash_layer_url : $get.splash_layer_url}}",
+							"splash_layer_width": "{{($jason.splash_layer_width) ? $jason.splash_layer_width : $get.splash_layer_width}}",
+							"splash_layer_left": "{{($jason.splash_layer_left) ? $jason.splash_layer_left : $get.splash_layer_left}}",
+							"splash_layer_top": "{{($jason.splash_layer_top) ? $jason.splash_layer_top : $get.splash_layer_top}}",
+							"splash_section_background": "{{($jason.splash_section_background) ? $jason.splash_section_background : $get.splash_section_background}}",
+							"disable_back_button": "{{($jason.disable_back_button) ? $jason.disable_back_button : false)}}",
+							"view_type": "secondary"
+						}
+					}
+				},
+				"linkClick": {
+					"type": "$href",
+					"options": {
+						"url": [
+							{
+								"{{#if ($jason.url).includes($get.baseUrl)}}": "{{($get.header_type !== 'none') ? $get.withheader_jasonUrl : $get.noheader_jasonUrl}}"
+							},
+							{
+								"{{#else}}": "{{$jason.url}}"
+							}
+						],
+						"options": {
+							"targetUrl": "{{$jason.url}}",
+							"notchcolor": "{{$get.notchcolor}}",
+							"baseUrl": "{{$get.baseUrl}}",
+							"header_title": "{{$get.header_title}}",
+							"header_background": "{{$get.header_background}}",
+							"header_color": "{{$get.header_color}}",
+							"header_size": "{{$get.header_size}}",
+							"header_font": "{{$get.header_font}}",
+							"header_imageurl": "{{$get.header_imageurl}}",
+							"header_imagewidth": "{{$get.header_imagewidth}}",
+							"header_imageheight": "{{$get.header_imageheight}}",
+							"header_type": "{{$get.header_type}}",
+							"header_menu_type": "{{$get.header_menu_type}}",
+							"header_menu_text": "{{$get.header_menu_text}}",
+							"header_menu_image": "{{$get.header_menu_image}}",
+							"header_menu_font": "{{$get.header_menu_font}}",
+							"splash_layer_url": "{{$get.splash_layer_url}}",
+							"splash_layer_width": "{{$get.splash_layer_width}}",
+							"splash_layer_left": "{{$get.splash_layer_left}}",
+							"splash_layer_top": "{{$get.splash_layer_top}}",
+							"splash_section_background": "{{$get.splash_section_background}}",
+							"disable_back_button": "false",
+							"view_type": "secondary"
+						},
+						"transition": "push",
+						"view": [
+							{
+								"{{#if ($jason.url).includes($get.baseUrl)}}": "jason"
+							},
+							{
+								"{{#else}}": "web"
+							}
+						]
+					}
+				},
+				"goBack": {
+					"type": "$back"
+				},
+				"onDeeplinkReceived": {
+					"type": "$href",
+					"options": {
+						"url": [
+							{
+								"{{#if ($jason.onLoadUrl).includes($get.baseUrl)}}": "{{($get.header_type !== 'none') ? $get.withheader_jasonUrl : $get.noheader_jasonUrl}}"
+							},
+							{
+								"{{#else}}": "{{$jason.onLoadUrl}}"
+							}
+						],
+						"options": {
+							"targetUrl": "{{$jason.onLoadUrl}}",
+							"notchcolor": "{{$get.notchcolor}}",
+							"baseUrl": "{{$get.baseUrl}}",
+							"header_title": "{{$get.header_title}}",
+							"header_background": "{{$get.header_background}}",
+							"header_color": "{{$get.header_color}}",
+							"header_size": "{{$get.header_size}}",
+							"header_font": "{{$get.header_font}}",
+							"header_imageurl": "{{$get.header_imageurl}}",
+							"header_imagewidth": "{{$get.header_imagewidth}}",
+							"header_imageheight": "{{$get.header_imageheight}}",
+							"header_type": "{{$get.header_type}}",
+							"header_menu_type": "{{$get.header_menu_type}}",
+							"header_menu_text": "{{$get.header_menu_text}}",
+							"header_menu_image": "{{$get.header_menu_image}}",
+							"header_menu_font": "{{$get.header_menu_font}}",
+							"splash_layer_url": "{{$get.splash_layer_url}}",
+							"splash_layer_width": "{{$get.splash_layer_width}}",
+							"splash_layer_left": "{{$get.splash_layer_left}}",
+							"splash_layer_top": "{{$get.splash_layer_top}}",
+							"splash_section_background": "{{$get.splash_section_background}}",
+							"disable_back_button": "false",
+							"view_type": "secondary"
+						},
+						"transition": "push",
+						"view": [
+							{
+								"{{#if ($jason.onLoadUrl).includes($get.baseUrl)}}": "jason"
+							},
+							{
+								"{{#else}}": "web"
+							}
+						]
+					}
+				},
+				"pushClickedWhileOpen": {
+					"type": "$href",
+					"options": {
+						"url": [
+							{
+								"{{#if ($jason.onLoadUrl).includes($get.baseUrl)}}": "{{($get.header_type !== 'none') ? $get.withheader_jasonUrl : $get.noheader_jasonUrl}}"
+							},
+							{
+								"{{#else}}": "{{$jason.onLoadUrl}}"
+							}
+						],
+						"options": {
+							"targetUrl": "{{$jason.onLoadUrl}}",
+							"notchcolor": "{{$get.notchcolor}}",
+							"baseUrl": "{{$get.baseUrl}}",
+							"header_title": "{{$get.header_title}}",
+							"header_background": "{{$get.header_background}}",
+							"header_color": "{{$get.header_color}}",
+							"header_size": "{{$get.header_size}}",
+							"header_font": "{{$get.header_font}}",
+							"header_imageurl": "{{$get.header_imageurl}}",
+							"header_imagewidth": "{{$get.header_imagewidth}}",
+							"header_imageheight": "{{$get.header_imageheight}}",
+							"header_type": "{{$get.header_type}}",
+							"header_menu_type": "{{$get.header_menu_type}}",
+							"header_menu_text": "{{$get.header_menu_text}}",
+							"header_menu_image": "{{$get.header_menu_image}}",
+							"header_menu_font": "{{$get.header_menu_font}}",
+							"splash_layer_url": "{{$get.splash_layer_url}}",
+							"splash_layer_width": "{{$get.splash_layer_width}}",
+							"splash_layer_left": "{{$get.splash_layer_left}}",
+							"splash_layer_top": "{{$get.splash_layer_top}}",
+							"splash_section_background": "{{$get.splash_section_background}}",
+							"disable_back_button": "false",
+							"view_type": "secondary"
+						},
+						"transition": "push",
+						"view": [
+							{
+								"{{#if ($jason.onLoadUrl).includes($get.baseUrl)}}": "jason"
+							},
+							{
+								"{{#else}}": "web"
+							}
+						]
+					}
+				},
+				"showPlayerId": {
+					"type": "$util.banner",
+					"options": {
+						"title": "Player ID is",
+						"description": "{{$env.playerId}}"
+					}
+				},
+				"version": {
+					"type": "$util.banner",
+					"options": {
+						"title": "Version is",
+						"description": "{{$get.version}}"
+					}
+				},
+				"sendDeviceInfoToBubble": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "collectDeviceInfo",
+						"params": [
+							"{{$env.playerId}}",
+							"{{$env.pushToken}}",
+							"{{$env.device.width}}",
+							"{{$env.device.height}}",
+							"{{$env.device.os.name}}",
+							"{{$env.device.os.version}}",
+							"{{$env.device.language}}",
+							"{{$cache.cameraPermissionStatus}}",
+							"{{$cache.contactsPermissionStatus}}",
+							"{{$cache.audiorecordPermissionStatus}}",
+							"{{$cache.externalstoragePermissionStatus}}",
+							"{{$cache.locationPermissionStatus}}",
+							"{{$env.versionName}}",
+							"{{$env.versionCode}}",
+							"{{$env.deviceModel}}",
+							"{{$get.bdkRelease}}",
+							"{{$env.biometrics}}",
+							"{{($cache.bna_email && $cache.bna_password) ? 'available' : 'not available'}}",
+							"{{$env.appTrackingPermission}}",
+							"{{$env.idfa}}",
+							"{{$get.view_type}}"
+						]
+					}
+				},
+				"showBanner": {
+					"type": "$util.banner",
+					"options": {
+						"title": "{{$jason.title}}",
+						"description": "{{$jason.description}}"
+					}
+				},
+				"showAlert": {
+					"type": "$util.alert",
+					"options": {
+						"title": "{{$jason.title}}",
+						"description": "{{$jason.description}}"
+					},
+					"success": {
+						"type": "$return.success"
+					}
+				},
+				"showToast": {
+					"type": "$util.toast",
+					"options": {
+						"type": "{{$jason.type}}",
+						"text": "{{$jason.text}}"
+					}
+				},
+				"shareText": {
+					"type": "$util.share",
+					"options": {
+						"items": [
+							{
+								"type": "text",
+								"text": "{{$jason.text_content}}"
+							}
+						]
+					}
+				},
+				"shareImage": {
+					"type": "$util.share",
+					"options": {
+						"items": [
+							{
+								"type": "image",
+								"url": "{{$jason.image_url}}"
+							}
+						]
+					}
+				},
+				"shareVideo": {
+					"type": "$util.share",
+					"options": {
+						"items": [
+							{
+								"type": "video",
+								"file_url": "{{$jason.video_url}}"
+							}
+						]
+					}
+				},
+				"shareAudio": {
+					"type": "$util.share",
+					"options": {
+						"items": [
+							{
+								"type": "audio",
+								"file_url": "{{$jason.audio_url}}"
+							}
+						]
+					}
+				},
+				"shareFile": {
+					"type": "$util.share",
+					"options": {
+						"items": [
+							{
+								"type": "file",
+								"file_url": "{{$jason.file_url}}"
+							}
+						]
+					}
+				},
+				"captureSnapshot": {
+					"type": "$snapshot",
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "collectSnapshot",
+							"params": [
+								"{{$jason.data}}"
+							]
+						}
+					}
+				},
+				"pickPhoto": {
+					"type": "$media.picker",
+					"options": {
+						"type": "photo",
+						"quality": "{{($jason.quality) ? ($jason.quality) : 'medium'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "pickPhoto",
+							"params": [
+								"{{$jason.file_url}}",
+								"{{$jason.data_uri}}",
+								"{{$jason.data}}",
+								"{{$jason.content_type}}"
+							]
+						}
+					}
+				},
+				"pickPhotoWithPreview": {
+					"type": "$media.picker",
+					"options": {
+						"edit": "{{($jason.edit) ? ($jason.edit) : 'true'}}",
+						"type": "photo",
+						"quality": "{{($jason.quality) ? ($jason.quality) : 'medium'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "pickPhoto",
+							"params": [
+								"{{$jason.file_url}}",
+								"{{$jason.data_uri}}",
+								"{{$jason.data}}",
+								"{{$jason.content_type}}"
+							]
+						}
+					}
+				},
+				"pickVideo": {
+					"type": "$media.picker",
+					"options": {
+						"type": "video",
+						"quality": "{{($jason.quality) ? ($jason.quality) : 'medium'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "pickVideo",
+							"params": [
+								"{{$jason.file_url}}",
+								"{{$jason.data_uri}}",
+								"{{$jason.data}}",
+								"{{$jason.content_type}}"
+							]
+						}
+					}
+				},
+				"pickVideoWithPreview": {
+					"type": "$media.picker",
+					"options": {
+						"edit": "{{($jason.edit) ? ($jason.edit) : 'true'}}",
+						"type": "video",
+						"quality": "{{($jason.quality) ? ($jason.quality) : 'medium'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "pickVideo",
+							"params": [
+								"{{$jason.file_url}}",
+								"{{$jason.data_uri}}",
+								"{{$jason.data}}",
+								"{{$jason.content_type}}"
+							]
+						}
+					}
+				},
+				"capturePhoto": {
+					"type": "$media.camera",
+					"options": {
+						"type": "photo",
+						"quality": "{{($jason.quality) ? ($jason.quality) : 'medium'}}",
+						"device": "{{($jason.device) ? ($jason.device) : 'back'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "capturePhoto",
+							"params": [
+								"{{$jason.file_url}}",
+								"{{$jason.data_uri}}",
+								"{{$jason.data}}",
+								"{{$jason.content_type}}"
+							]
+						}
+					}
+				},
+				"capturePhotoWithPreview": {
+					"type": "$media.camera",
+					"options": {
+						"edit": "true",
+						"type": "photo",
+						"quality": "{{($jason.quality) ? ($jason.quality) : 'medium'}}",
+						"device": "{{($jason.device) ? ($jason.device) : 'back'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "capturePhoto",
+							"params": [
+								"{{$jason.file_url}}",
+								"{{$jason.data_uri}}",
+								"{{$jason.data}}",
+								"{{$jason.content_type}}"
+							]
+						}
+					}
+				},
+				"captureVideo": {
+					"type": "$media.camera",
+					"options": {
+						"type": "video",
+						"quality": "{{($jason.quality) ? ($jason.quality) : 'medium'}}",
+						"device": "{{($jason.device) ? ($jason.device) : 'back'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "captureVideo",
+							"params": [
+								"{{$jason.file_url}}",
+								"{{$jason.data_uri}}",
+								"{{$jason.data}}",
+								"{{$jason.content_type}}"
+							]
+						}
+					}
+				},
+				"captureVideoWithPreview": {
+					"type": "$media.camera",
+					"options": {
+						"edit": "{{($jason.edit) ? ($jason.edit) : 'true'}}",
+						"type": "video",
+						"quality": "{{($jason.quality) ? ($jason.quality) : 'medium'}}",
+						"device": "{{($jason.device) ? ($jason.device) : 'back'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "captureVideo",
+							"params": [
+								"{{$jason.file_url}}",
+								"{{$jason.data_uri}}",
+								"{{$jason.data}}",
+								"{{$jason.content_type}}"
+							]
+						}
+					}
+				},
+				"runFunction": {
+					"type": "$lambda",
+					"options": {
+						"name": "{{$jason.name}}",
+						"options": "{{$jason.options}}"
+					}
+				},
+				"renderLink": {
+					"type": "$set",
+					"options": {
+						"url": "{{($jason.link) ? ($jason.link) : ($get.url)}}"
+					},
+					"success": {
+						"type": "$render"
+					}
+				},
+				"openLink": {
+					"type": "$href",
+					"options": {
+						"url": "{{$jason.link}}",
+						"transition": "{{$jason.transition}}",
+						"view": "{{$jason.view}}"
+					}
+				},
+				"playVideo": {
+					"type": "$media.play",
+					"options": {
+						"url": "{{$jason.url}}",
+						"muted": "{{($jason.muted == 'true') ? 'true':'false'}}"
+					}
+				},
+				"playVideoPlaylist": {
+					"type": "$media.playlist",
+					"options": {
+						"urls": "{{$jason.urls}}",
+						"muted": "{{($jason.muted == 'true') ? 'true':'false'}}"
+					}
+				},
+				"playAudio": {
+					"type": "$audio.play",
+					"options": {
+						"url": "{{$jason.url}}",
+						"title": "{{$jason.title}}",
+						"author": "{{$jason.author}}",
+						"album": "{{$jason.album}}",
+						"image": "{{$jason.image}}"
+					}
+				},
+				"recordAudio": {
+					"type": "$audio.record",
+					"options": {
+						"color": "{{($jason.color) ? $jason.color : (($get.header_background) ? $get.header_background : '#000000')}}",
+						"color:disabled": "{{($jason.color_disabled) ? $jason.color_disabled : '#DD2C3E'}}"
+					}
+				},
+				"onAudioRecordSuccess": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "recordAudio",
+						"params": [
+							"{{$jason.file_url}}",
+							"{{$jason.data_uri}}",
+							"{{$jason.data_uri}}",
+							"{{$jason.content_type}}"
+						]
+					}
+				},
+				"onAudioRecordCancel": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "recordAudioCancelled"
+					}
+				},
+				"pauseAudio": {
+					"type": "$audio.pause"
+				},
+				"stopAudio": {
+					"type": "$audio.stop"
+				},
+				"askCameraPermission": {
+					"type": "$cache.set",
+					"options": {
+						"cameraPermission": "ask"
+					},
+					"success": {
+						"type": "$reload"
+					}
+				},
+				"askContactsPermission": {
+					"type": "$cache.set",
+					"options": {
+						"contactsPermission": "ask"
+					},
+					"success": {
+						"type": "$reload"
+					}
+				},
+				"askAudiorecordPermission": {
+					"type": "$cache.set",
+					"options": {
+						"audiorecordPermission": "ask",
+						"externalstoragePermission": "ask"
+					},
+					"success": {
+						"type": "$reload"
+					}
+				},
+				"askExternalstoragePermission": {
+					"type": "$cache.set",
+					"options": {
+						"externalstoragePermission": "ask"
+					},
+					"success": {
+						"type": "$reload"
+					}
+				},
+				"askLocationPermission": {
+					"type": "$cache.set",
+					"options": {
+						"locationPermission": "ask"
+					},
+					"success": {
+						"type": "$reload"
+					}
+				},
+				"askPermission": {
+					"type": "$bdk.askpermission",
+					"options": {
+						"type": "{{($jason.type) ? ($jason.type) : 'camera'}}"
+					}
+				},
+				"getContacts": {
+					"type": "$util.addressbook",
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "getContacts",
+							"params": [
+								"{{$jason}}",
+								"{{$env.device.os.name}}"
+							]
+						}
+					}
+				},
+				"updateHeaderData": {
+					"type": "$set",
+					"options": {
+						"header_title": "{{($jason.header_title) ? $jason.header_title : $get.header_title}}",
+						"header_background": "{{($jason.header_background) ? $jason.header_background : $get.header_background}}",
+						"header_color": "{{($jason.header_color) ? $jason.header_color : $get.header_color}}",
+						"header_size": "{{($jason.header_size) ? $jason.header_size : $get.header_size}}",
+						"header_font": "{{($jason.header_font) ? $jason.header_font : $get.header_font}}",
+						"header_imageurl": "{{($jason.header_imageurl) ? $jason.header_imageurl : $get.header_imageurl}}",
+						"header_imagewidth": "{{($jason.header_imagewidth) ? $jason.header_imagewidth : $get.header_imagewidth}}",
+						"header_imageheight": "{{($jason.header_imageheight) ? $jason.header_imageheight : $get.header_imageheight}}",
+						"header_type": "{{($jason.header_type) ? $jason.header_type : $get.header_type}}",
+						"header_menu_type": "{{($jason.header_menu_type) ? $jason.header_menu_type : $get.header_menu_type}}",
+						"header_menu_text": "{{($jason.header_menu_text) ? $jason.header_menu_text : $get.header_menu_text}}",
+						"header_menu_image": "{{($jason.header_menu_image) ? $jason.header_menu_image : $get.header_menu_image}}",
+						"header_menu_font": "{{($jason.header_menu_font) ? $jason.header_menu_font : $get.header_menu_font}}",
+						"header_menu_badge_type": "{{($jason.header_menu_badge_type) ? $jason.header_menu_badge_type : $get.header_menu_badge_type}}",
+						"header_menu_badge_text": "{{($jason.header_menu_badge_text) ? $jason.header_menu_badge_text : $get.header_menu_badge_text}}",
+						"header_menu_badge_background": "{{($jason.header_menu_badge_background) ? $jason.header_menu_badge_background : $get.header_menu_badge_background}}",
+						"header_menu_badge_color": "{{($jason.header_menu_badge_color) ? $jason.header_menu_badge_color : $get.header_menu_badge_color}}",
+						"header_menu_badge_top": "{{($jason.header_menu_badge_top) ? $jason.header_menu_badge_top : $get.header_menu_badge_top}}",
+						"header_menu_badge_left": "{{($jason.header_menu_badge_left) ? $jason.header_menu_badge_left : $get.header_menu_badge_left}}",
+						"header_shy": "{{($jason.header_shy) ? $jason.header_shy : $get.header_shy}}"
+					},
+					"success": {
+						"trigger": "calc_next_header"
+					},
+					"error": {}
+				},
+				"calc_next_header": {
+					"type": "$set",
+					"options": {
+						"next_header": "{{bdk_utils.calc_header($get)}}"
+					}
+				},
+				"updateNotchColor": {
+					"type": "$set",
+					"options": {
+						"notchcolor": "{{($jason.notchcolor) ? $jason.notchcolor : $get.notchcolor}}"
+					}
+				},
+				"renderHeaderOnlyAndroid": {
+					"type": "$render",
+					"options": {
+						"template": "body_ex_bg"
+					}
+				},
+				"renderHeaderOnlyiOS": {
+					"type": "$render",
+					"options": {
+						"template": "body_ex_bg"
+					}
+				},
+				"renderHeaderFooteriOS": {
+					"type": "$render",
+					"options": {
+						"template": "body_ex_bg"
+					}
+				},
+				"renderCurrentView": {
+					"type": "$render"
+				},
+				"renderLinkWithoutHeader": {
+					"type": "$set",
+					"options": {
+						"url": "{{($jason.link) ? ($jason.link) : ($get.url)}}"
+					},
+					"success": {
+						"type": "$render",
+						"options": {
+							"template": "body_without_header"
+						}
+					}
+				},
+				"$foreground": {},
+				"saveToCache": {
+					"type": "$cache.set",
+					"options": {
+						"{{$jason.variable}}": "{{$jason.data}}"
+					}
+				},
+				"getFromCache": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "collectDeviceVariable",
+						"params": [
+							"{{$jason.variable}}",
+							"{{$cache[$jason.variable]}}"
+						]
+					}
+				},
+				"headerMenuClicked": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "headerMenuClicked",
+						"params": []
+					}
+				},
+				"scanBarcode": {
+					"type": "$href",
+					"options": {
+						"url": "{{encodeURI($get.template_Scan)}}",
+						"transition": "push",
+						"view": "jason"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "collectBarcode",
+							"params": [
+								"{{$jason}}"
+							]
+						}
+					}
+				},
+				"showMenu": {
+					"type": "$href",
+					"options": {
+						"url": "{{encodeURI($get.template_Menu)}}",
+						"transition": "push",
+						"view": "jason",
+						"options": {
+							"menudata": "{{$jason.menudata}}",
+							"header_data": "{{$jason.header_data}}",
+							"background": "{{$jason.background}}"
+						}
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "collectMenuClick",
+							"params": [
+								"{{$jason}}"
+							]
+						}
+					}
+				},
+				"getDeviceCoords": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "collectLocation",
+						"params": [
+							"{{$get.deviceLocation}}"
+						]
+					}
+				},
+				"getLocation": {
+					"type": "$geo.get",
+					"options": {
+						"distance": "{{($jason.distance) ? ($jason.distance) : 1000}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "collectLocation",
+							"params": [
+								"{{$jason.coord}}"
+							]
+						}
+					}
+				},
+				"startTracking": {
+					"type": "$geo.starttracking",
+					"options": {
+						"distance": "{{($jason.distance) ? ($jason.distance) : 1000}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'significant'}}"
+					},
+					"success": {
+						"type": "$set",
+						"options": {
+							"deviceLocation": "{{$jason.coord}}"
+						}
+					}
+				},
+				"cancelTracking": {
+					"type": "$geo.canceltracking",
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "locationTrackingCancelled",
+							"params": [
+								"{{$jason.coord}}"
+							]
+						}
+					}
+				},
+				"startDesiredTracking": {
+					"type": "$geo.startdesiredtracking",
+					"options": {
+						"distance": "{{($jason.distance) ? ($jason.distance) : 1000}}"
+					},
+					"success": {
+						"type": "$set",
+						"options": {
+							"deviceLocation": "{{$jason.coord}}"
+						}
+					}
+				},
+				"startSignificantTracking": {
+					"type": "$geo.startsignificanttracking",
+					"options": {
+						"distance": "{{($jason.distance) ? ($jason.distance) : 1000}}"
+					},
+					"success": {
+						"type": "$set",
+						"options": {
+							"deviceLocation": "{{$jason.coord}}"
+						}
+					}
+				},
+				"showPopup": {
+					"type": "$bdk.alert",
+					"options": {
+						"title": "{{($jason.title)?($jason.title):''}}",
+						"description": "{{($jason.description)?($jason.description):''}}",
+						"ok_label": "{{($jason.ok_label)?($jason.ok_label):'OK'}}",
+						"cancel_label": "{{($jason.cancel_label)?($jason.cancel_label):'CANCEL'}}"
+					}
+				},
+				"onPopupSuccessButton": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "collectPopup",
+						"params": [
+							"ok_button"
+						]
+					}
+				},
+				"onPopupCancelButton": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "collectPopup",
+						"params": [
+							"cancel_button"
+						]
+					}
+				},
+				"setOrientation": {
+					"type": "$bdk.setorientation",
+					"options": {
+						"type": "{{($jason.type)?($jason.type):'none'}}"
+					}
+				},
+				"lockOrientation": {
+					"type": "$bdk.lockorientation",
+					"options": {
+						"type": "{{($jason.type)?($jason.type):'none'}}"
+					}
+				},
+				"switchOrientation": {
+					"type": "$bdk.switchorientation"
+				},
+				"updateStatusBar": {
+					"type": "$bdk.updatestatusbar",
+					"options": {
+						"color": "{{($jason.color) ? ($jason.color) : ($get.notchcolor)}}"
+					}
+				},
+				"setStatusBar": {
+					"type": "$set",
+					"options": {
+						"statusbarcolor": "{{($jason.color) ? ($jason.color) : ($get.statusbarcolor)}}"
+					},
+					"success": {
+						"type": "$bdk.updatestatusbar",
+						"options": {
+							"color": "{{$get.statusbarcolor}}"
+						}
+					}
+				},
+				"permissionChanged": {
+					"trigger": "sendDeviceInfoToBubble"
+				},
+				"enableBackButton": {
+					"type": "$set",
+					"options": {
+						"disable_back_press": "false"
+					}
+				},
+				"disableBackButton": {
+					"type": "$set",
+					"options": {
+						"disable_back_press": "true"
+					}
+				},
+				"backButtonPressed": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "backButtonPressed",
+						"params": []
+					}
+				},
+				"setAltSiteUrl": {
+					"type": "$cache.set",
+					"options": {
+						"altSiteUrl": "{{$jason.altSiteUrl}}"
+					},
+					"success": {
+						"type": "$util.banner",
+						"options": {
+							"title": "Launch site",
+							"description": "has been changed",
+							"type": "success"
+						}
+					}
+				},
+				"clearAltSiteUrl": {
+					"type": "$cache.set",
+					"options": {
+						"altSiteUrl": "none"
+					},
+					"success": {
+						"type": "$util.banner",
+						"options": {
+							"title": "Launch site",
+							"description": "back to original",
+							"type": "success"
+						}
+					}
+				},
+				"pickDateTime": {
+					"type": "$util.datepicker",
+					"options": {
+						"type": "{{($jason.type) ? ($jason.type) : 'datetime'}}",
+						"title": "{{($jason.title) ? ($jason.title) : 'Select'}}",
+						"description": "{{($jason.description) ? ($jason.description) : ''}}",
+						"theme": "{{($jason.theme) ? ($jason.theme) : 'white'}}",
+						"minuteInterval": "{{($jason.minuteInterval) ? ($jason.minuteInterval) : 15}}",
+						"minimumDate": "{{($jason.minimumDate) ? ($jason.minimumDate) : 'none'}}",
+						"maximumDate": "{{($jason.maximumDate) ? ($jason.maximumDate) : 'none'}}"
+					},
+					"success": {
+						"type": "$agent.request",
+						"options": {
+							"id": "$webcontainer",
+							"method": "collectDateTime",
+							"params": [
+								"{{($jason && $jason.value) ? ($jason.value)*1000 : null}}"
+							]
+						}
+					}
+				},
+				"doNothing": {
+					"type": "$bdk.do_nothing",
+					"options": "{{$jason}}"
+				},
+				"onWebpageLoadStarted_ios": {
+					"trigger": "runFunction",
+					"options": {
+						"name": [
+							{
+								"{{#if (!(($get.view_type == 'primary') && ($get.primary_policy).includes('remove_loading_pagestart')) && !(($get.view_type == 'secondary') && ($get.secondary_policy).includes('remove_loading_pagestart')) && ($get.url).includes($get.baseUrl) && !(($get.url).includes('oauth')))}}": "sendDeviceInfoToBubble"
+							},
+							{
+								"{{#else}}": "removeLoading"
+							}
+						],
+						"options": {
+							"dummy": "variable for ios"
+						}
+					}
+				},
+				"onWebpageLoadStarted_android": {
+					"trigger": "runFunction",
+					"options": {
+						"name": [
+							{
+								"{{#if (!(($get.view_type == 'primary') && ($get.primary_policy).includes('remove_loading_pagestart')) && !(($get.view_type == 'secondary') && ($get.secondary_policy).includes('remove_loading_pagestart')) && ($get.url).includes($get.baseUrl) && !(($get.url).includes('oauth')))}}": "sendDeviceInfoToBubble"
+							},
+							{
+								"{{#else}}": "removeLoading"
+							}
+						],
+						"options": {
+							"dummy": "variable for ios"
+						}
+					}
+				},
+				"onWebpageLoaded_ios": {
+					"trigger": "runFunction",
+					"options": {
+						"name": [
+							{
+								"{{#if (!(($get.view_type == 'primary') && ($get.primary_policy).includes('remove_loading_pagefinish')) && !(($get.view_type == 'secondary') && ($get.secondary_policy).includes('remove_loading_pagefinish')) && ($get.url).includes($get.baseUrl) && !(($get.url).includes('oauth')))}}": "sendDeviceInfoToBubble"
+							},
+							{
+								"{{#else}}": "removeLoading"
+							}
+						],
+						"options": {
+							"dummy": "variable for ios"
+						}
+					}
+				},
+				"onWebpageLoaded_android": {
+					"trigger": "runFunction",
+					"options": {
+						"name": [
+							{
+								"{{#if (!(($get.view_type == 'primary') && ($get.primary_policy).includes('remove_loading_pagefinish')) && !(($get.view_type == 'secondary') && ($get.secondary_policy).includes('remove_loading_pagefinish')) && ($get.url).includes($get.baseUrl) && !(($get.url).includes('oauth')))}}": "sendDeviceInfoToBubble"
+							},
+							{
+								"{{#else}}": "removeLoading"
+							}
+						],
+						"options": {
+							"dummy": "variable for ios"
+						}
+					}
+				},
+				"purchaseProduct_ios": {
+					"type": "$bdk.purchaseproduct_ios",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"consumePurchase_ios": {
+					"type": "$bdk.consumepurchase_ios",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"getReceipts_ios": {
+					"type": "$bdk.getreceipts_ios",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"restorePurchases_ios": {
+					"type": "$bdk.restorepurchases_ios",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"onPurchaseSuccess_ios": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onPurchaseSuccess_ios",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onPurchaseFailed_ios": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onPurchaseFailed_ios",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onReceiptDataReceived_ios": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onReceiptDataReceived_ios",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onPurchaseHistoryRestored_ios": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onPurchaseHistoryRestored_ios",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"purchaseProduct_android": {
+					"type": "$bdk.purchaseproduct_android",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"consumePurchase_android": {
+					"type": "$bdk.consumepurchase_android",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"restorePurchases_android": {
+					"type": "$bdk.restorepurchases_android",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"getPurchaseDetails_android": {
+					"type": "$bdk.getpurchasedetails_android",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"getReceipts_android": {
+					"type": "$bdk.getreceipts_android",
+					"options": {
+						"id": "{{($jason.id) ? ($jason.id) : 'none'}}",
+						"type": "{{($jason.type) ? ($jason.type) : 'product'}}"
+					}
+				},
+				"onPurchaseSuccess_android": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onPurchaseSuccess_android",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onPurchaseFailed_android": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onPurchaseFailed_android",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onReceiptDataReceived_android": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onReceiptDataReceived_android",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onPurchaseHistoryRestored_android": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onPurchaseHistoryRestored_android",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onProductConsumed_ios": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onProductConsumed_ios",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onProductConsumeFailed_ios": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onProductConsumeFailed_ios",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onProductConsumed_android": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onProductConsumed_android",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"onProductConsumeFailed_android": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onProductConsumeFailed_android",
+						"params": [
+							"{{$jason}}"
+						]
+					}
+				},
+				"authenticateBiometrics_ios": {
+					"type": "$bdk.authenticatebiometrics_ios",
+					"options": {
+						"type": "any",
+						"attempt_login": "{{($jason.attempt_login) ? ($jason.attempt_login) : 'false'}}"
+					}
+				},
+				"onBiometricAuthenticationSuccess_ios": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onBiometricAuthentication_ios",
+						"params": [
+							"{{$jason}}",
+							"success"
+						]
+					}
+				},
+				"onBiometricAuthenticationFailed_ios": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onBiometricAuthentication_ios",
+						"params": [
+							"{{$jason}}",
+							"failed"
+						]
+					}
+				},
+				"authenticateBiometrics_android": {
+					"type": "$bdk.authenticatebiometrics_android",
+					"options": {
+						"type": "any",
+						"attempt_login": "{{($jason.attempt_login) ? ($jason.attempt_login) : 'false'}}"
+					}
+				},
+				"onBiometricAuthenticationSuccess_android": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onBiometricAuthentication_android",
+						"params": [
+							"{{$jason}}",
+							"success"
+						]
+					}
+				},
+				"onBiometricAuthenticationFailed_android": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onBiometricAuthentication_android",
+						"params": [
+							"{{$jason}}",
+							"failed"
+						]
+					}
+				},
+				"updateCredentials": {
+					"type": "$cache.set",
+					"options": {
+						"bna_email": "{{$jason.email}}",
+						"bna_password": "{{$jason.password}}"
+					},
+					"success": {
+						"trigger": "sendDeviceInfoToBubble"
+					}
+				},
+				"loginViaCredentials": {
+					"type": "$agent.request",
+					"options": {
+						"id": "$webcontainer",
+						"method": "onLoginViaCredentials",
+						"params": [
+							"{{$cache.bna_email}}",
+							"{{$cache.bna_password}}"
+						]
+					}
+				},
+				"vibrate": {
+					"type": "$bdk.vibrate",
+					"options": "{{$jason}}"
+				},
+				"disableLeftSwipe": {
+					"type": "$bdk.disableLeftSwipe",
+					"options": "{{$jason}}"
+				},
+				"webviewToPage": {
+					"type": "$bdk.webviewToPage",
+					"options": "{{$jason}}"
+				},
+				"requestRating": {
+					"type": "$bdk.requestRating",
+					"options": {
+						"title": "{{($jason.title) ? ($jason.title) : 'none'}}",
+						"description": "{{($jason.description) ? ($jason.description) : 'none'}}"
+					}
+				},
+				"askiOSAppTrackingPermission": {
+					"type": "$bdk.askTrackingPermission",
+					"options": {
+						"dummy": "variable for ios"
+					},
+					"success": {
+						"trigger": "sendDeviceInfoToBubble"
+					}
+				}
+			},
+			"templates": {
+				"body": {
+					"background": "{{$get.next_background}}"
+				},
+				"body_ex_bg": {
+					"background": "{{$get.current_background_passive}}"
+				},
+				"body_without_header": {
+					"background": "{{$get.next_background}}"
+				},
+				"splashlayer": {
+					"background": "{{$get.next_background}}",
+					"layers": "{{$get.next_layers}}",
+					"sections": "{{$get.next_sections}}"
+				},
+				"splashlayer_without_header": {
+					"background": "{{$get.next_background}}",
+					"layers": "{{$get.next_layers}}",
+					"sections": "{{$get.next_sections}}"
+				}
+			}
+		}
+	}
+}
