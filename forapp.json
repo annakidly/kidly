@@ -13,7 +13,7 @@
 		"bdkRelease": "1.9",
 		"notchcolor": "#FFFFFF",
 		"jasonUrl": "https://bdknative.s3-us-west-1.amazonaws.com/avzme/v1.92/noheader.json",
-		"siteUrl": "https://kidly.app",
+		"siteUrl": "https://kidly.app/?app",
 		"baseUrl": "kidly.app",
 		"header_type": "none",
 		"header_title": "Kidly App",
